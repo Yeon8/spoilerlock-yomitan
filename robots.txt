@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yeon8.github.io/spoilerlock-yomitan/sitemap.xml

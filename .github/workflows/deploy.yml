@@ -1,0 +1,38 @@
+name: Deploy Public SpoilerLock Storefront to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-storefront:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout Public Storefront
+        uses: actions/checkout@v4
+
+      - name: Stage Strictly Public Web Assets Only
+        run: |
+          mkdir -p _site
+          cp index.html _site/index.html
+          [ -f sitemap.xml ] && cp sitemap.xml _site/sitemap.xml || true
+          [ -f robots.txt ] && cp robots.txt _site/robots.txt || true
+          touch _site/.nojekyll
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

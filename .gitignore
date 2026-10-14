@@ -1,0 +1,8 @@
+# Strictly block all generator scripts, JSON registries, and .zip packs from public Git!
+*.py
+*.json
+*.zip
+*.db
+packs/
+spoiler_lock_yomitan_studio.html
+__pycache__/
